@@ -12,11 +12,59 @@
   <link rel="preload" as="image" href="./src/assets/mask-squircle.svg">
   <link rel="preload" as="image" href="./src/assets/mask-staff.svg">
   <script type="module" src="/src/index.ts"></script>
+  <script defer src="https://umami.erambert.me/script.js"
+    data-website-id="b1ddfe40-9c28-4565-a417-6777eb6590a8"></script>
 </head>
 
 <body>
-  <previewer-app>
-  </previewer-app>
+  <app-context>
+    <div class="app-container">
+      <h1>Cohost Avatar Previewer</h1>
+      <div class="steps">
+        <div>
+          <h3>Upload your file:</h3>
+          <upload-input></upload-input>
+          <h3>Shape:</h3>
+          <shape-selector></shape-selector>
+        </div>
+        <div>
+          <h3>Instructions:</h3>
+          <ol>
+            <li>
+              Select your file with the button on the left (or drop it on the
+              page)
+            </li>
+            <li>Choose your avatar shape</li>
+            <li>That's it!</li>
+          </ol>
+          <app-warnings></app-warnings>
+        </div>
+      </div>
+      <div class="previews">
+        <div class="profile-preview">
+          <h2>Profile page (144px)</h2>
+          <profile-preview size="desktop">
+            <avatar-preview avatarSize="jumbo"></avatar-preview>
+          </profile-preview>
+        </div>
+        <div class="post-preview">
+          <h2>Timeline (64px) and in-post (32px)</h2>
+          <timeline-post>
+            <avatar-preview slot="large" avatarSize="medium"></avatar-preview>
+
+            <avatar-preview slot="small" avatarSize="small"></avatar-preview>
+          </timeline-post>
+        </div>
+        <div class="profile-mobile-preview">
+          <h2>Profile page mobile (80px)</h2>
+          <profile-preview size="mobile">
+            <avatar-preview avatarSize="large"></avatar-preview>
+          </profile-preview>
+        </div>
+      </div>
+
+    </div>
+  </app-context>
   <footer class="main-footer">
     <p>
       A tool by <a href="https://erambert.me">Damien Erambert</a>. Source code on <a

@@ -2,6 +2,11 @@ import { LitElement, css, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
 import { UploadValidFileEvent } from "../events";
 
+export enum FileWarnings {
+  TOO_BIG = "TOO_BIG",
+  NOT_IMAGE = "NOT_IMAGE",
+}
+
 @customElement("upload-input")
 export class UploadInput extends LitElement {
   @query('input[type="file"]')
