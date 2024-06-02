@@ -7,18 +7,46 @@ export class UploadInput extends LitElement {
   @query('input[type="file"]')
   input!: HTMLInputElement;
 
+  #onDragOver = (e: DragEvent) => {
+    e.preventDefault();
+    if (e.dataTransfer) {
+      e.dataTransfer.dropEffect = "copy";
+    }
+  };
+  #onDrop = (e: DragEvent) => {
+    e.preventDefault();
+    const files = e.dataTransfer?.files;
+    const file = files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    this.dispatchEvent(new UploadValidFileEvent(file));
+  };
+  #onDragLeave = () => {};
+  connectedCallback(): void {
+    super.connectedCallback();
+    window.addEventListener("dragover", this.#onDragOver);
+    window.addEventListener("drop", this.#onDrop);
+    window.addEventListener("dragleave", this.#onDragLeave);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    window.removeEventListener("dragover", this.#onDragOver);
+    window.removeEventListener("drop", this.#onDrop);
+    window.removeEventListener("dragleave", this.#onDragLeave);
+  }
+
   #onFile() {
     const file = this.input.files?.[0];
     if (!file) {
       return;
     }
 
-    this.file = file;
     this.dispatchEvent(new UploadValidFileEvent(file));
   }
-
-  @state()
-  file?: File;
 
   static styles = css`
     .container {

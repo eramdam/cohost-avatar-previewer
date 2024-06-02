@@ -100,6 +100,12 @@ export class App extends LitElement {
       border-radius: 10px;
     }
 
+    @media (prefers-color-scheme: dark) {
+      .warnings {
+        color: rgb(var(--color-notBlack));
+      }
+    }
+
     :any-link {
       color: inherit;
     }
