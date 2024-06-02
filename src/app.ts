@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { UploadValidFileEvent } from "./events";
-import { AvatarMask } from "./avatar-preview";
+import { AvatarMask } from "./components/avatar-preview";
 
 @customElement("previewer-app")
 export class App extends LitElement {
@@ -60,17 +60,21 @@ export class App extends LitElement {
 
         <div>
           <h2>Timeline (64px) and in-post (32px)</h2>
-          <avatar-preview
-            .avatarSrc=${this.previewAvatarSrc}
-            .avatarSize=${"medium"}
-            .avatarMask=${this.avatarMask}
-          ></avatar-preview>
+          <timeline-post>
+            <avatar-preview
+              slot="large"
+              .avatarSrc=${this.previewAvatarSrc}
+              .avatarSize=${"medium"}
+              .avatarMask=${this.avatarMask}
+            ></avatar-preview>
 
-          <avatar-preview
-            .avatarSrc=${this.previewAvatarSrc}
-            .avatarSize=${"small"}
-            .avatarMask=${this.avatarMask}
-          ></avatar-preview>
+            <avatar-preview
+              slot="small"
+              .avatarSrc=${this.previewAvatarSrc}
+              .avatarSize=${"small"}
+              .avatarMask=${this.avatarMask}
+            ></avatar-preview>
+          </timeline-post>
         </div>
       </div>
     `;

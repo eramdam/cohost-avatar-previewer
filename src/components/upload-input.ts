@@ -1,6 +1,6 @@
 import { LitElement, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
-import { UploadValidFileEvent } from "./events";
+import { UploadValidFileEvent } from "../events";
 
 @customElement("upload-input")
 export class UploadInput extends LitElement {

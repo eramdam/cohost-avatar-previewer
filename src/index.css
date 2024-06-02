@@ -28,6 +28,17 @@
     U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
 :root {
   --color-notWhite: 255 249 242;
   --color-notBlack: 25 25 25;
