@@ -50,13 +50,15 @@
 
 :root {
   font-family: Atkinson Hyperlegible, system-ui;
-  color: rgb(var(--color-notBlack));
-  background-color: rgb(var(--color-notWhite));
+
+  color: rgb(var(--color-notWhite));
+  background-color: rgb(var(--color-notBlack));
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     color: rgb(var(--color-notBlack));
+    background-color: rgb(var(--color-notWhite));
   }
 }
 

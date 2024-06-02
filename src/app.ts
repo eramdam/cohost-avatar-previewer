@@ -21,7 +21,7 @@ export class App extends LitElement {
     "https://staging.cohostcdn.org/avatar/291-71d40cfe-58e3-4a64-84d5-054fbc0e2edd-profile.jpg?dpr=2&width=80&height=80&fit=cover&auto=webp";
 
   @state()
-  avatarMask: AvatarMask = "roundrect";
+  avatarMask: AvatarMask = "circle";
   @state()
   warnings: Warnings[] = [];
 
@@ -35,6 +35,14 @@ export class App extends LitElement {
       isNotImage && Warnings.NOT_IMAGE,
     ].filter(Boolean);
     console.log(this.warnings, e.file.size > 200_000);
+  }
+
+  #onShapeSelect(e: Event) {
+    if (!(e.target instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    this.avatarMask = e.target.value as AvatarMask;
   }
 
   static styles = css`
@@ -95,6 +103,10 @@ export class App extends LitElement {
     :any-link {
       color: inherit;
     }
+
+    select {
+      color-scheme: light dark;
+    }
   `;
 
   renderWarning(warning: Warnings) {
@@ -131,13 +143,25 @@ export class App extends LitElement {
         <h1>Cohost Avatar Previewer</h1>
         <div class="steps">
           <div>
-            <h3>Select your file:</h3>
+            <h3>Upload your file:</h3>
             <upload-input></upload-input>
+            <h3>Shape:</h3>
+            <select name="shape" id="shape" @change=${this.#onShapeSelect}>
+              ${Object.entries(shapeNames).map(([key, value]) => {
+                return html`<option
+                  value=${key}
+                  ?selected=${this.avatarMask === key}
+                >
+                  ${value}
+                </option>`;
+              })}
+            </select>
           </div>
           <div>
             <h3>Instructions:</h3>
             <ol>
               <li>Select your file with the button on the left</li>
+              <li>Choose your avatar shape</li>
               <li>That's it!</li>
             </ol>
             ${this.renderWarnings()}
@@ -193,3 +217,12 @@ declare global {
     "previewer-app": App;
   }
 }
+
+const shapeNames: Record<AvatarMask, string> = {
+  circle: "circle",
+  roundrect: "round square",
+  squircle: "squircle",
+  "capsule-big": "capsule (big)",
+  "capsule-small": "capsule (small)",
+  staff: "eggbug (are you staff?)",
+};

@@ -53,7 +53,7 @@ export class TimelinePost extends LitElement {
       align-items: center;
     }
 
-    .thread-header > div strong {
+    .thread-header > div {
       color: rgb(25, 25, 25);
     }
 
@@ -67,10 +67,10 @@ export class TimelinePost extends LitElement {
       gap: 0.5rem;
       align-items: center;
       background-color: rgb(var(--color-notWhite));
+      color: rgb(25, 25, 25);
     }
 
     .post-header .avatar {
-      aspect-ratio: 1/1;
       display: inline-block;
       line-height: 0;
     }
