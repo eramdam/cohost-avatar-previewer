@@ -125,8 +125,11 @@ export class TimelinePost extends LitElement {
             <div class="post-content">
               <div class="post-prose">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Maxime ea reiciendis at soluta veritatis?
+                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                  Molestiae doloremque necessitatibus mollitia vero voluptates
+                  cupiditate non alias totam rem architecto optio pariatur magni
+                  laboriosam quidem quos soluta aperiam, eius nulla modi iusto,
+                  nobis quae minus provident!
                 </p>
               </div>
             </div>

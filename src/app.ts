@@ -29,6 +29,12 @@ export class App extends LitElement {
       align-items: center;
       gap: 2rem;
     }
+
+    .previews {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 2rem;
+    }
   `;
 
   render() {
@@ -36,45 +42,45 @@ export class App extends LitElement {
       <div class="container">
         <h1>Cohost Avatar Previewer</h1>
         <upload-input></upload-input>
-        <div>
-          <h2>Profile page (144px)</h2>
-          <profile-preview size="desktop">
-            <avatar-preview
-              .avatarSrc=${this.previewAvatarSrc}
-              .avatarSize=${"jumbo"}
-              .avatarMask=${this.avatarMask}
-            ></avatar-preview>
-          </profile-preview>
-        </div>
+        <div class="previews">
+          <div>
+            <h2>Profile page (144px)</h2>
+            <profile-preview size="desktop">
+              <avatar-preview
+                .avatarSrc=${this.previewAvatarSrc}
+                .avatarSize=${"jumbo"}
+                .avatarMask=${this.avatarMask}
+              ></avatar-preview>
+            </profile-preview>
+          </div>
+          <div>
+            <h2>Timeline (64px) and in-post (32px)</h2>
+            <timeline-post>
+              <avatar-preview
+                slot="large"
+                .avatarSrc=${this.previewAvatarSrc}
+                .avatarSize=${"medium"}
+                .avatarMask=${this.avatarMask}
+              ></avatar-preview>
 
-        <div>
-          <h2>Profile page mobile (80px)</h2>
-          <profile-preview size="mobile">
-            <avatar-preview
-              .avatarSrc=${this.previewAvatarSrc}
-              .avatarSize=${"large"}
-              .avatarMask=${this.avatarMask}
-            ></avatar-preview>
-          </profile-preview>
-        </div>
-
-        <div>
-          <h2>Timeline (64px) and in-post (32px)</h2>
-          <timeline-post>
-            <avatar-preview
-              slot="large"
-              .avatarSrc=${this.previewAvatarSrc}
-              .avatarSize=${"medium"}
-              .avatarMask=${this.avatarMask}
-            ></avatar-preview>
-
-            <avatar-preview
-              slot="small"
-              .avatarSrc=${this.previewAvatarSrc}
-              .avatarSize=${"small"}
-              .avatarMask=${this.avatarMask}
-            ></avatar-preview>
-          </timeline-post>
+              <avatar-preview
+                slot="small"
+                .avatarSrc=${this.previewAvatarSrc}
+                .avatarSize=${"small"}
+                .avatarMask=${this.avatarMask}
+              ></avatar-preview>
+            </timeline-post>
+          </div>
+          <div>
+            <h2>Profile page mobile (80px)</h2>
+            <profile-preview size="mobile">
+              <avatar-preview
+                .avatarSrc=${this.previewAvatarSrc}
+                .avatarSize=${"large"}
+                .avatarMask=${this.avatarMask}
+              ></avatar-preview>
+            </profile-preview>
+          </div>
         </div>
       </div>
     `;
