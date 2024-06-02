@@ -1,6 +1,7 @@
-import { LitElement, css, html } from "lit";
+import { LitElement, css, html, unsafeCSS } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { classMap } from "lit/directives/class-map.js";
+import headerImage from "../assets/login-graphic.jpg";
 
 @customElement("profile-preview")
 export class ProfilePreview extends LitElement {
@@ -27,8 +28,13 @@ export class ProfilePreview extends LitElement {
     .header {
       height: calc(100px + 5rem);
       width: 100%;
-      background-image: url("https://staging.cohostcdn.org/site-assets/login-graphic.png");
-      background-size: cover;
+      background-image: url(${unsafeCSS(headerImage)}),
+        linear-gradient(
+          to bottom,
+          rgb(var(--color-mango)),
+          rgb(var(--color-cherry))
+        );
+      background-size: cover, 100% 400px;
       background-position: center;
     }
     .mobile .header {

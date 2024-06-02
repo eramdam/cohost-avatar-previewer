@@ -160,7 +160,10 @@ export class App extends LitElement {
           <div>
             <h3>Instructions:</h3>
             <ol>
-              <li>Select your file with the button on the left</li>
+              <li>
+                Select your file with the button on the left (or drop it on the
+                page)
+              </li>
               <li>Choose your avatar shape</li>
               <li>That's it!</li>
             </ol>
