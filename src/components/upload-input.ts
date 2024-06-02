@@ -1,6 +1,6 @@
 import { LitElement, css, html } from "lit";
 import { customElement, query } from "lit/decorators.js";
-import { UploadValidFileEvent } from "../events";
+import { AvatarChangeEvent, UploadValidFileEvent } from "../events";
 
 export enum FileWarnings {
   TOO_BIG = "TOO_BIG",
@@ -28,6 +28,7 @@ export class UploadInput extends LitElement {
     }
 
     this.dispatchEvent(new UploadValidFileEvent(file));
+    this.dispatchEvent(new AvatarChangeEvent(URL.createObjectURL(file)));
   };
   #onDragLeave = () => {};
   connectedCallback(): void {
@@ -51,6 +52,7 @@ export class UploadInput extends LitElement {
     }
 
     this.dispatchEvent(new UploadValidFileEvent(file));
+    this.dispatchEvent(new AvatarChangeEvent(URL.createObjectURL(file)));
   }
 
   static styles = css`

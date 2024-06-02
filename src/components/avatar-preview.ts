@@ -1,11 +1,11 @@
 import { LitElement, css, html, unsafeCSS } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import maskSquircle from "../assets/mask-squircle.svg";
+import { customElement, property, state } from "lit/decorators.js";
+import defaultAvatar from "../assets/default-avatar.jpg";
 import maskCapsuleBig from "../assets/mask-capsule-big.svg";
 import maskCapsuleSmall from "../assets/mask-capsule-small.svg";
+import maskSquircle from "../assets/mask-squircle.svg";
 import maskStaff from "../assets/mask-staff.svg";
-import { consume } from "@lit/context";
-import { appContext, AppState } from "./app-context";
+import { AvatarChangeEvent, ShapeChangeEvent } from "../events";
 
 export type AvatarSize = "jumbo" | "large" | "medium" | "small";
 export type AvatarMask =
@@ -27,14 +27,45 @@ export const shapeNames: Record<AvatarMask, string> = {
 
 @customElement("avatar-preview")
 export class AvatarPreview extends LitElement {
-  @property()
-  avatarMask!: AvatarMask;
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this.ownerDocument.documentElement.addEventListener(
+      AvatarChangeEvent.eventName,
+      this.#onAvatarChange
+    );
+    this.ownerDocument.documentElement.addEventListener(
+      ShapeChangeEvent.eventName,
+      this.#onShapeChange
+    );
+  }
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.ownerDocument.documentElement.removeEventListener(
+      AvatarChangeEvent.eventName,
+      this.#onAvatarChange
+    );
+    this.ownerDocument.documentElement.removeEventListener(
+      ShapeChangeEvent.eventName,
+      this.#onShapeChange
+    );
+  }
+
+  #onShapeChange = (e: ShapeChangeEvent) => {
+    this.avatarMask = e.shape;
+  };
+  #onAvatarChange = (e: AvatarChangeEvent) => {
+    this.avatarSrc = e.avatarUrl;
+  };
 
   @property()
   avatarSize!: AvatarSize;
 
-  @property({ type: String })
-  avatarSrc!: string;
+  @state()
+  avatarMask: AvatarMask = "circle";
+  @state()
+  avatarSrc: string = defaultAvatar;
 
   static override styles = css`
     .mask-roundrect {
@@ -103,12 +134,9 @@ export class AvatarPreview extends LitElement {
     }
   `;
 
-  @consume({ context: appContext, subscribe: true })
-  state!: AppState;
-
   protected render() {
-    const avatarMask = this.avatarMask || this.state.avatarMask;
-    const avatarSrc = this.avatarSrc || this.state.previewAvatarSrc;
+    const avatarMask = this.avatarMask;
+    const avatarSrc = this.avatarSrc;
     return html`
       <div class=${`wrapper ${this.avatarSize}`}>
         <img class=${`mask-${avatarMask}`} src=${avatarSrc} />
