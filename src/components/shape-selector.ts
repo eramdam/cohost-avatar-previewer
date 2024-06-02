@@ -2,8 +2,6 @@ import { LitElement, html } from "lit";
 import { customElement } from "lit/decorators.js";
 import { ShapeChangeEvent } from "../events";
 import { AvatarMask, shapeNames } from "./avatar-preview";
-import { consume } from "@lit/context";
-import { AppState, appContext } from "./app-context";
 
 @customElement("shape-selector")
 export class ShapeSelector extends LitElement {
@@ -15,11 +13,7 @@ export class ShapeSelector extends LitElement {
     this.dispatchEvent(new ShapeChangeEvent(e.target.value as AvatarMask));
   };
 
-  @consume({ context: appContext, subscribe: true })
-  state!: AppState;
-
   protected render(): unknown {
-    console.log("aa", this.state.avatarMask);
     return html`
       <select
         name="shape"
@@ -28,12 +22,7 @@ export class ShapeSelector extends LitElement {
         style="color-scheme: ligh dark"
       >
         ${Object.entries(shapeNames).map(([key, value]) => {
-          return html`<option
-            value=${key}
-            ?selected=${this.state.avatarMask === key}
-          >
-            ${value}
-          </option>`;
+          return html`<option value=${key}>${value}</option>`;
         })}
       </select>
     `;

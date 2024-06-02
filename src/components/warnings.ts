@@ -1,13 +1,39 @@
 import { LitElement, css, html } from "lit";
-import { customElement } from "lit/decorators.js";
-import { AppState, appContext } from "./app-context";
-import { consume } from "@lit/context";
+import { customElement, state } from "lit/decorators.js";
+import { UploadValidFileEvent } from "../events";
 import { FileWarnings } from "./upload-input";
 
 @customElement("app-warnings")
 export class AppWarnings extends LitElement {
-  @consume({ context: appContext, subscribe: true })
-  state!: AppState;
+  @state()
+  warnings: FileWarnings[] = [];
+
+  connectedCallback(): void {
+    super.connectedCallback();
+
+    this.ownerDocument.documentElement.addEventListener(
+      UploadValidFileEvent.eventName,
+      this.#onFile
+    );
+  }
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.ownerDocument.documentElement.removeEventListener(
+      UploadValidFileEvent.eventName,
+      this.#onFile
+    );
+  }
+
+  #onFile = (e: UploadValidFileEvent) => {
+    const isNotImage =
+      !e.file.type.startsWith("image/") && e.file.type !== "image/svg+xml";
+
+    this.warnings = [
+      e.file.size > 200_000 && FileWarnings.TOO_BIG,
+      isNotImage && FileWarnings.NOT_IMAGE,
+    ].filter(Boolean);
+  };
 
   static styles = css`
     .warnings {
@@ -37,17 +63,15 @@ export class AppWarnings extends LitElement {
   }
 
   renderWarnings() {
-    if (this.state.warnings.length < 1) {
+    if (this.warnings.length < 1) {
       return "";
     }
 
     return html`
       <div class="warnings">
-        <h3>${this.state.warnings.length > 1 ? "Warnings" : "Warning"}:</h3>
+        <h3>${this.warnings.length > 1 ? "Warnings" : "Warning"}:</h3>
         <ul>
-          ${this.state.warnings.map(
-            (w) => html`<li>${this.renderWarning(w)}</li>`
-          )}
+          ${this.warnings.map((w) => html`<li>${this.renderWarning(w)}</li>`)}
         </ul>
       </div>
     `;
