@@ -19,7 +19,7 @@ export class ShapeSelector extends LitElement {
         name="shape"
         id="shape"
         @change=${this.#onShapeSelect}
-        style="color-scheme: ligh dark"
+        style="color-scheme: light dark"
       >
         ${Object.entries(shapeNames).map(([key, value]) => {
           return html`<option value=${key}>${value}</option>`;
