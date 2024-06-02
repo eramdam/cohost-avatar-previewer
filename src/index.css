@@ -61,3 +61,16 @@
     color: rgb(var(--color-notBlack));
   }
 }
+
+.main-footer {
+  margin: 60px auto;
+  text-align: center;
+}
+
+:any-link {
+  color: inherit;
+}
+
+p {
+  line-height: 1.75;
+}

@@ -36,9 +36,6 @@ export class TimelinePost extends LitElement {
       margin: 0;
     }
 
-    .post-block > div {
-    }
-
     .thread-header > div {
       display: flex;
       line-height: 1;
@@ -99,6 +96,7 @@ export class TimelinePost extends LitElement {
     .post-prose p {
       margin: 0;
       color: #191919;
+      line-height: 1.75;
     }
   `;
 
@@ -128,9 +126,7 @@ export class TimelinePost extends LitElement {
               <div class="post-prose">
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Maxime ea reiciendis at soluta veritatis? Necessitatibus error
-                  dicta doloremque doloribus pariatur, aliquam inventore tempora
-                  quasi totam veritatis consequatur culpa beatae libero?
+                  Maxime ea reiciendis at soluta veritatis?
                 </p>
               </div>
             </div>

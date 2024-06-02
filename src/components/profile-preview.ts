@@ -13,7 +13,7 @@ export class ProfilePreview extends LitElement {
       flex-direction: column;
       align-items: center;
       background: rgb(var(--color-cherry));
-      width: 300px;
+      width: 500px;
       border-radius: 10px;
       overflow: hidden;
     }
