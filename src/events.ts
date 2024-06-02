@@ -18,9 +18,19 @@ export class ShapeChangeEvent extends Event {
   }
 }
 
+export class AvatarChangeEvent extends Event {
+  static readonly eventName = "avatar-change" as const;
+  readonly avatarUrl: string;
+  constructor(url: string) {
+    super(AvatarChangeEvent.eventName, { bubbles: true, composed: true });
+    this.avatarUrl = url;
+  }
+}
+
 declare global {
   interface HTMLElementEventMap {
     "upload-valid-file": UploadValidFileEvent;
     "shape-change": ShapeChangeEvent;
+    "avatar-change": AvatarChangeEvent;
   }
 }
