@@ -3,12 +3,17 @@ import { customElement, state } from "lit/decorators.js";
 import { UploadValidFileEvent } from "./events";
 import { AvatarMask } from "./components/avatar-preview";
 
+enum Warnings {
+  TOO_BIG = "TOO_BIG",
+  NOT_IMAGE = "NOT_IMAGE",
+}
+
 @customElement("previewer-app")
 export class App extends LitElement {
   constructor() {
     super();
 
-    this.addEventListener(UploadValidFileEvent.eventName, this.#onValidFile);
+    this.addEventListener(UploadValidFileEvent.eventName, this.#onFile);
   }
 
   @state()
@@ -17,9 +22,19 @@ export class App extends LitElement {
 
   @state()
   avatarMask: AvatarMask = "roundrect";
+  @state()
+  warnings: Warnings[] = [];
 
-  #onValidFile(e: UploadValidFileEvent) {
+  #onFile(e: UploadValidFileEvent) {
     this.previewAvatarSrc = URL.createObjectURL(e.file);
+
+    const isNotImage =
+      !e.file.type.startsWith("image/") && e.file.type !== "image/svg+xml";
+    this.warnings = [
+      e.file.size > 200_000 && Warnings.TOO_BIG,
+      isNotImage && Warnings.NOT_IMAGE,
+    ].filter(Boolean);
+    console.log(this.warnings, e.file.size > 200_000);
   }
 
   static styles = css`
@@ -34,14 +49,73 @@ export class App extends LitElement {
       display: grid;
       grid-template-columns: repeat(2, auto);
       gap: 2rem;
+      width: 80%;
+    }
+
+    .steps {
+      width: 80%;
+      display: grid;
+      grid-template-columns: repeat(2, 50%);
+      gap: 2rem;
+    }
+
+    p,
+    ol,
+    ul {
+      line-height: 1.75;
+    }
+
+    .warnings {
+      background-color: rgb(255 142 138);
+      padding: 0.1rem 1.2rem;
+      border-radius: 10px;
     }
   `;
+
+  renderWarning(warning: Warnings) {
+    switch (warning) {
+      case Warnings.NOT_IMAGE: {
+        return html`The file isn't of a type supported by cohost`;
+      }
+      case Warnings.TOO_BIG: {
+        return html`The file is bigger than 200kb.`;
+      }
+    }
+  }
+
+  renderWarnings() {
+    if (this.warnings.length < 1) {
+      return "";
+    }
+
+    return html`
+      <div class="warnings">
+        <h3>${this.warnings.length > 1 ? "Warnings" : "Warning"}:</h3>
+        <ul>
+          ${this.warnings.map((w) => html`<li>${this.renderWarning(w)}</li>`)}
+        </ul>
+      </div>
+    `;
+  }
 
   render() {
     return html`
       <div class="container">
         <h1>Cohost Avatar Previewer</h1>
-        <upload-input></upload-input>
+        <div class="steps">
+          <div>
+            <h3>Select your file:</h3>
+            <upload-input></upload-input>
+          </div>
+          <div>
+            <h3>Instructions:</h3>
+            <ol>
+              <li>Select your file with the button on the left</li>
+              <li>That's it!</li>
+            </ol>
+            ${this.renderWarnings()}
+          </div>
+        </div>
         <div class="previews">
           <div>
             <h2>Profile page (144px)</h2>

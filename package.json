@@ -14,6 +14,7 @@
     "lit": "^3.1.2"
   },
   "devDependencies": {
+    "@total-typescript/ts-reset": "^0.5.1",
     "ts-lit-plugin": "^2.0.2",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
