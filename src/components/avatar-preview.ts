@@ -4,6 +4,8 @@ import maskSquircle from "../assets/mask-squircle.svg";
 import maskCapsuleBig from "../assets/mask-capsule-big.svg";
 import maskCapsuleSmall from "../assets/mask-capsule-small.svg";
 import maskStaff from "../assets/mask-staff.svg";
+import { consume } from "@lit/context";
+import { appContext, AppState } from "./app-context";
 
 export type AvatarSize = "jumbo" | "large" | "medium" | "small";
 export type AvatarMask =
@@ -13,6 +15,15 @@ export type AvatarMask =
   | "capsule-big"
   | "capsule-small"
   | "staff";
+
+export const shapeNames: Record<AvatarMask, string> = {
+  circle: "circle",
+  roundrect: "round square",
+  squircle: "squircle",
+  "capsule-big": "capsule (big)",
+  "capsule-small": "capsule (small)",
+  staff: "eggbug (are you staff?)",
+};
 
 @customElement("avatar-preview")
 export class AvatarPreview extends LitElement {
@@ -92,10 +103,15 @@ export class AvatarPreview extends LitElement {
     }
   `;
 
+  @consume({ context: appContext, subscribe: true })
+  state!: AppState;
+
   protected render() {
+    const avatarMask = this.avatarMask || this.state.avatarMask;
+    const avatarSrc = this.avatarSrc || this.state.previewAvatarSrc;
     return html`
       <div class=${`wrapper ${this.avatarSize}`}>
-        <img class=${`mask-${this.avatarMask}`} src=${this.avatarSrc} />
+        <img class=${`mask-${avatarMask}`} src=${avatarSrc} />
       </div>
     `;
   }

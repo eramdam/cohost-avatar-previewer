@@ -71,6 +71,50 @@
   color: inherit;
 }
 
-p {
+p,
+ol,
+ul {
   line-height: 1.75;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.steps {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  gap: 2rem;
+}
+
+.previews {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 2rem;
+  width: 80%;
+}
+
+@media (max-width: 1150px) {
+  .previews,
+  .steps {
+    grid-template-columns: repeat(1, auto);
+    width: 95%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profile-preview {
+    order: 1;
+  }
+  .profile-mobile-preview {
+    order: 2;
+  }
+  .post-preview {
+    order: 3;
+  }
 }
