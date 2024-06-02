@@ -50,8 +50,6 @@
 
 :root {
   font-family: Atkinson Hyperlegible, system-ui;
-
-  color-scheme: light dark;
   color: rgb(var(--color-notBlack));
   background-color: rgb(var(--color-notWhite));
 }

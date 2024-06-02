@@ -12,6 +12,12 @@ export class TimelinePost extends LitElement {
       column-gap: 1.5rem;
     }
 
+    @media (max-width: 500px) {
+      .post {
+        width: 100%;
+      }
+    }
+
     .post-block {
       box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14),
         0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);

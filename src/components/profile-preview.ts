@@ -18,6 +18,12 @@ export class ProfilePreview extends LitElement {
       overflow: hidden;
     }
 
+    @media (max-width: 500px) {
+      .jumbo-container {
+        width: 100%;
+      }
+    }
+
     .header {
       height: calc(100px + 5rem);
       width: 100%;

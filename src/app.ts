@@ -59,6 +59,27 @@ export class App extends LitElement {
       gap: 2rem;
     }
 
+    @media (max-width: 1150px) {
+      .previews,
+      .steps {
+        grid-template-columns: repeat(1, auto);
+        width: 95%;
+        margin: 0 auto;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-preview {
+        order: 1;
+      }
+      .profile-mobile-preview {
+        order: 2;
+      }
+      .post-preview {
+        order: 3;
+      }
+    }
+
     p,
     ol,
     ul {
@@ -70,6 +91,10 @@ export class App extends LitElement {
       padding: 0.1rem 1.2rem;
       border-radius: 10px;
     }
+
+    :any-link {
+      color: inherit;
+    }
   `;
 
   renderWarning(warning: Warnings) {
@@ -78,7 +103,9 @@ export class App extends LitElement {
         return html`The file isn't of a type supported by cohost`;
       }
       case Warnings.TOO_BIG: {
-        return html`The file is bigger than 200kb.`;
+        return html`The file is bigger than 200kb. Try compressing it with a
+          tool like <a href="https://squoosh.app/">Squoosh</a> or
+          <a href="https://jakearchibald.github.io/svgomg/">SVGOMG</a>`;
       }
     }
   }
@@ -117,7 +144,7 @@ export class App extends LitElement {
           </div>
         </div>
         <div class="previews">
-          <div>
+          <div class="profile-preview">
             <h2>Profile page (144px)</h2>
             <profile-preview size="desktop">
               <avatar-preview
@@ -127,7 +154,7 @@ export class App extends LitElement {
               ></avatar-preview>
             </profile-preview>
           </div>
-          <div>
+          <div class="post-preview">
             <h2>Timeline (64px) and in-post (32px)</h2>
             <timeline-post>
               <avatar-preview
@@ -145,7 +172,7 @@ export class App extends LitElement {
               ></avatar-preview>
             </timeline-post>
           </div>
-          <div>
+          <div class="profile-mobile-preview">
             <h2>Profile page mobile (80px)</h2>
             <profile-preview size="mobile">
               <avatar-preview
